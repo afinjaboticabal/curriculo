@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerador de Currículo</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input, textarea { width: 100%; margin-bottom: 10px; padding: 8px; border-radius: 6px; border: 1px solid #ccc; }
+    button { padding: 10px 20px; background: #1976d2; color: white; border: none; border-radius: 6px; cursor: pointer; }
+    button:hover { background: #0d47a1; }
+  </style>
+</head>
+<body>
+  <h2>Preencha seu Currículo</h2>
+  <input type="text" id="nome" placeholder="Nome completo">
+  <input type="text" id="email" placeholder="Email">
+  <input type="text" id="telefone" placeholder="Telefone">
+  <textarea id="experiencia" placeholder="Experiências profissionais"></textarea>
+  <textarea id="formacao" placeholder="Formação acadêmica"></textarea>
+  <button onclick="gerarPDF()">Baixar Currículo</button>
+
+  <script>
+    async function gerarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      let nome = document.getElementById("nome").value;
+      let email = document.getElementById("email").value;
+      let telefone = document.getElementById("telefone").value;
+      let experiencia = document.getElementById("experiencia").value;
+      let formacao = document.getElementById("formacao").value;
+
+      doc.setFontSize(16);
+      doc.text("Currículo", 20, 20);
+
+      doc.setFontSize(12);
+      doc.text(`Nome: ${nome}`, 20, 40);
+      doc.text(`Email: ${email}`, 20, 50);
+      doc.text(`Telefone: ${telefone}`, 20, 60);
+
+      doc.text("Experiência:", 20, 80);
+      doc.text(experiencia, 20, 90, { maxWidth: 170 });
+
+      doc.text("Formação:", 20, 130);
+      doc.text(formacao, 20, 140, { maxWidth: 170 });
+
+      doc.save("curriculo.pdf");
+    }
+  </script>
+</body>
+</html>
